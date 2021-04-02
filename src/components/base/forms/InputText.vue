@@ -1,10 +1,10 @@
 <template>
-  <div :class="[`input-${inputType}`, `${styleType}`, `${className}`]">
+  <div :class="[`input-${inputType}`, `${styleType}`, `${className}`, {'test': testClass}]">
     <!-- methods 사용할때 () 까지 적어야한다, 없어도 빼면 시행안됨 -->
     <label 
         v-if="!isLabelHide()"
         :for="id"
-        class="label-legend"><slot /></label>
+        class="label-legend"><slot />{{typeof(testClass)}} {{testClass}}</label>
     <!-- 부모에서 v-model로 설정하여 자동으로 배치된 value값 할당 -->
     <!-- 근데 같은 컴포넌트 쓰니깐, 같이 이벤트가 발생해버리네??, 이름부분만 이벤트 있음, 이름만 직혀야지 왜 이메일도 같이 찎혀 머리 안돌아가게 -->
     <input 
@@ -66,6 +66,9 @@ export default {
         },
         rules: {
             type: Array,
+        },
+        testClass: {
+            type: Boolean,
         }
     },
     methods: {

@@ -41,6 +41,17 @@
         className="mt15" 
         placeholder="test@dot.com">이메일 {{guideRequest.email}}</input-text>
 
+      <input-text
+        v-model="guideRequest.email"
+        :rules="rules.email"
+        id="g-mail"
+        name="g-mail"
+        inputType="text"
+        styleType="type1"
+        className="mt15"
+        :testClass=false 
+        placeholder="test@dot.com">이메일 {{guideRequest.email}}</input-text>
+
       <guide-sub-title class="mt15">textarea</guide-sub-title>
       <!-- [TODO] 본 input type엔 textarea 없지만 그냥 이름 짓기 구찮아서 넣어준것... -->
       <input-textarea
