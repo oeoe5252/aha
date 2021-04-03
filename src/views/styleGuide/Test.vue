@@ -7,6 +7,7 @@
   - 화:오전:: 텍스트에어리아: v-model, 글자수 카운트, rules는 필요 없
   - 화:오오오오후:: 셀렉트: 화요일 저녁에 놀고 해보자 수요일 전엔 기본이라도 완성시키기 
   - 주말에 했음 좀 좋니.... 벼락치기 인생... 이럼 안대 김아진.... 외줄타기하네 혼자
+  - 에러에 따른 스타일 효과 작업하기(추후)
  -->
       <guide-sub-title class="line-hide">
         input
@@ -41,17 +42,6 @@
         className="mt15" 
         placeholder="test@dot.com">이메일 {{guideRequest.email}}</input-text>
 
-      <input-text
-        v-model="guideRequest.email"
-        :rules="rules.email"
-        id="g-mail"
-        name="g-mail"
-        inputType="text"
-        styleType="type1"
-        className="mt15"
-        :testClass=false 
-        placeholder="test@dot.com">이메일 {{guideRequest.email}}</input-text>
-
       <guide-sub-title class="mt15">textarea</guide-sub-title>
       <!-- [TODO] 본 input type엔 textarea 없지만 그냥 이름 짓기 구찮아서 넣어준것... -->
       <input-textarea
@@ -68,23 +58,23 @@
       <guide-sub-title class="mt15">radio</guide-sub-title>
       <div class="g-wrap">
         <!-- [TODO] 체크 기본 설정 옵션 아직 작업 안함 -->
+        <!-- v-model에서 checked나, value값은 vue 가 가지고 있는게 우선되서 내가 넘긴 props은 무시된다. 그래서 다른 prop으로 전달한다. -->
         <input-radio
           v-model="guideRequest.gender"
-          :checked='true'
-          value="g-gender1-1"
+          val="g-gender1-1"
           id="g-gender1-1"
           name="g-gender1"
           inputType="radio"
-          className="mt15">라디오1{{guideRequest.gender}}</input-radio>
+          className="mt15">라디오1</input-radio>
         <input-radio
           v-model="guideRequest.gender"
-          value="g-gender1-2"
+          val="g-gender1-2"
           id="g-gender1-2"
           name="g-gender1"
           inputType="radio"
-          className="mt15">라디오2{{guideRequest.gender}}</input-radio>
+          className="mt15">라디오2</input-radio>
         <!-- [TODO] 에러 컴포넌트 -->
-        <p class="error"><i></i>에러문구 올 예정</p>
+        <p class="error"><i></i>{{guideRequest.gender}}에러문구 올 예정</p>
       </div>
 
       <guide-sub-title class="mt15">checkbox</guide-sub-title>
