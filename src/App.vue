@@ -32,7 +32,7 @@ export default {
   components: { TmpList },
   data() {
     return {
-      listType: 'basic',
+      listType: 'webzine',
       theItem: {},
       items: [
         {
