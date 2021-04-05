@@ -92,7 +92,7 @@ export default {
             // console.log(this.rules);
             let tmpValue = this.value;
             let tmpResult = this.rules.map(function(elem) {
-                console.log("foreach", elem(tmpValue), typeof(elem(tmpValue)));
+                // console.log("foreach", elem(tmpValue), typeof(elem(tmpValue)));
                 return elem(tmpValue);
                 // elem('test');
             });
@@ -102,7 +102,7 @@ export default {
         },
         printErrMsg: function() {
             this.tmpErrMsg = this.checkRules().find(element=> element !== true );
-            console.log("print============", this.tmpErrMsg);
+            // console.log("print============", this.tmpErrMsg);
             return this.tmpErrMsg;
         }
     }

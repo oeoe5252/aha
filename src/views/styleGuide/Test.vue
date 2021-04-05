@@ -81,36 +81,62 @@
       <div class="g-wrap">
         <!-- [TODO] 체크 기본 설정 옵션 아직 작업 안함 -->
         <input-check
+          v-model="guideRequest.chkGroup1"
+          val="chkGroup1-1"
           id="g-chk-1"
           name="g-chk"
           inputType="checkbox"
-          className="mt15">체크1</input-check>
+          className="mt15">G1-체크1</input-check>
         <input-check
+          v-model="guideRequest.chkGroup1"
+          val="chkGroup1-2"
           id="g-chk-2"
           name="g-chk"
           inputType="checkbox"
-          className="mt15">체크2</input-check>
+          className="mt15">G1-체크2</input-check>
+        <input-check
+          v-model="guideRequest.chkGroup1"
+          val="chkGroup1-3"
+          id="g-chk-3"
+          name="g-chk"
+          inputType="checkbox"
+          className="mt15">G1-체크3</input-check>
         <!-- [TODO] 에러 컴포넌트 -->
-        <p class="error"><i></i>에러문구 올 예정</p>
+        <p class="error"><i></i>{{guideRequest.chkGroup1}}에러문구 올 예정</p>
       </div>
       <div class="g-wrap">
         <!-- [TODO] 체크 기본 설정 옵션 아직 작업 안함 -->
         <input-check
+          v-model="guideRequest.chkGroup2"
+          val="chkGroup2-1"
           id="g-chk2-1"
-          name="g-chk2"
           inputType="checkbox"
           styleType="type2"
-          className="mt15">체크1</input-check>
+          className="mt15">G2-체크1</input-check>
         <input-check
+          v-model="guideRequest.chkGroup2"
+          val="chkGroup2-2"
           id="g-chk2-2"
-          name="g-chk2"
           inputType="checkbox"
           styleType="type2"
-          className="mt15">체크2</input-check>
+          className="mt15">G2-체크2</input-check>
         <!-- [TODO] 에러 컴포넌트 -->
-        <p class="error"><i></i>에러문구 올 예정</p>
+        <p class="error"><i></i>{{guideRequest.chkGroup2}} 에러문구 올 예정</p>
       </div>
+      <div class="g-wrap">
+        <!-- input 바로 테스트 -->
+        <!-- 
+          - v-model에 value의 값이 들어간다.
+          - @input 먼저 발생 후 @change 수행되는거 같음.
+          -->
 
+        <input v-model="guideRequest.tmpChk" @change="testChange" @input="testInput" class="input-checkbox" type="checkbox" name="tmpChk" value="1chk" style="appearance: auto">
+        <input v-model="guideRequest.tmpChk" @change="testChange" @input="testInput" class="input-checkbox" type="checkbox" name="tmpChk" value="2chk" style="appearance: auto">
+        <input v-model="guideRequest.tmpChk" @change="testChange" @input="testInput" class="input-checkbox" type="checkbox" name="tmpChk" value="3chk" style="appearance: auto">
+        <input v-model="guideRequest.tmpChk" @change="testChange" @input="testInput" class="input-checkbox" type="checkbox" name="tmpChk" value="4chk" style="appearance: auto">
+        <input v-model="guideRequest.tmpChk" @change="testChange" @input="testInput" class="input-checkbox" type="checkbox" name="tmpChk" value="5chk" style="appearance: auto">
+        <p class="error"><i></i>{{guideRequest.tmpChk}} 에러문구 올 예정</p>
+      </div>
 
   </guide-layout>
 </template>
@@ -145,6 +171,9 @@ export default {
       email: '',
       gender: '',
       textarea: '',
+      chkGroup1: [],
+      chkGroup2: [],
+      tmpChk: [],
     },
     // vuetify 복붙 : vuetify에 안적혀있었음 생각도 못했을거
     // 에러는 무진장 뜨네 멋모르고 막하니깐(루프 오류 제일심각)
@@ -179,6 +208,21 @@ export default {
       ]
     }
   }),
+  methods: {
+    testChange: function() {
+      // @input에서 선택한 value 값을 v-model 아이에게 넣는 작업을 수행하는 거 같음.
+      console.log("::change", this.guideRequest.tmpChk);
+      // console.log(e.target.value);
+      
+    },
+    testInput: function(e) {
+      console.log("::input", e.target.value);
+      console.log("::input-checked", e.target.checked);
+      console.log("::input", this.guideRequest.tmpChk);
+      // 여기서 선택한 value 값을 v-model 아이에게 넣는 작업을 수행하는 거 같음.
+      // console.log(e.target.value);
+    }
+  }
 }
 </script>
 
