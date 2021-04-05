@@ -37,9 +37,10 @@ export default {
             console.log("클릭", item);
             // 부모에 input 이벤트를 발생시켜줘, 내가 전달하는 데이터는 item이야
             // cf: @이벤트 명은 kebab-case로 작성한다. camelCase로 해도 camelcase로 사용된다.
-            // 왜 클릭에서 item을 전달 안하고, input에서 전달하지?
+            // v-model을 사용해서, 부모의 v-model value에 해당 item 할당(그냥 있는거 활용하려고) : 값만 설정하면, value값을 v-model에 바인딩 해주고, input 이라는 이벤트도 발생시켜주니, 활용한것,(상태가 변경되면 수행됨)
             this.$emit('input', item);
-            // 부모에 click 이벤트를 발생시켜줘
+            // 부모에 click 이벤트를 발생시켜줘()
+            // 모달 띄우기 위한 click 이벤트 계속 전달
             this.$emit('click');
         }
     }

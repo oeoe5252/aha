@@ -16,20 +16,51 @@
       <button @click="selectListType('webzine')">&#x1F610;웹진형{{listType}}</button>
     </div>
 
+    <!-- 타입이 넘어가고, 해당 타입에 해당하는 컴포넌트 하나만 노출됨 v-if -->
     <tmp-list
       v-model="theItem"
       :listType="listType"
-      :items="items"></tmp-list>
+      :items="items"
+      @click="onCountViews"></tmp-list>
+
+    <!-- [TODO] 팝업 컴포넌트 스타일 나중에
+      - FIXED: 팝업 띄울 전체 바닥-투명도 스타일 인자 넘기는거
+      - ABS: 팝업 요소 WRAP()
+    -->
+    
+    <!-- [NOTE] 자식에서 부모 값 변경할거 전달하긔
+      - 자식 컴포넌트에서 title prop를 업데이트 하려고 할 때,
+      - this.$emit('update:title', newTitle) // prop title을 new값으로 업데이트 이벤 긔긔
+      - 자식의 emilt을 받은 부모는
+      v-bind:title="doc.title" // 그 부모 data 값을 prop값으로 변경쓰!
+      v-on:update:title="doc.title = $event" // title 업데이트 하는뎁, 자식에서 받은 이벤값을 부모 data 값에 넣는당
+      일케 동작함 (emit 이벤트로 받은 값($evnet)를 부모의 data에 저장하고, 부모의 prop 에 저장한 data를 넣어쥰다)
+      - 위의 코드를 한줄로 표헌하면
+      - v-bind:title.sync="doc.title" 일케 된다.
+  -->
+
+    <tmp-modal 
+      v-if="itemModal"
+      :modalShow.sync="itemModal">
+      
+      <img class="modal-thum" :src="theItem.thum" :alt="theItem.title">
+      <p>{{theItem.title}}</p>
+      <p>{{theItem.desc}}</p>
+      <p>{{theItem.writer}}</p>
+      <p>{{theItem.views}}</p>
+    </tmp-modal>
+
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import TmpList from "@/components/tmp/tmpList/Index"
+import TmpModal from "@/components/tmp/tmpModal/TmpModal"
 
 export default {
   name: 'Index',
-  components: { TmpList },
+  components: { TmpList, TmpModal },
   data() {
     return {
       listType: 'webzine',
@@ -42,7 +73,6 @@ export default {
           thum: require('@/assets/images/list/thum_1.jpg'),
           writer: 'Anonymous',
           views: 0,
-          rank: '1',
         },
         {
           idx: '2',
@@ -51,7 +81,6 @@ export default {
           thum: require('@/assets/images/list/thum_2.jpg'),
           writer: 'Anonymous',
           views: 0,
-          rank: '2',
         },
         {
           idx: '3',
@@ -60,7 +89,6 @@ export default {
           thum: require('@/assets/images/list/thum_3.jpg'),
           writer: 'Anonymous',
           views: 0,
-          rank: '3',
         },
         {
           idx: '4',
@@ -69,7 +97,6 @@ export default {
           thum: require('@/assets/images/list/thum_4.jpg'),
           writer: 'Anonymous',
           views: 0,
-          rank: '4',
         },
         {
           idx: '5',
@@ -78,7 +105,6 @@ export default {
           thum: require('@/assets/images/list/thum_5.jpg'),
           writer: 'Anonymous',
           views: 0,
-          rank: '5',
         },
         {
           idx: '6',
@@ -87,15 +113,26 @@ export default {
           thum: require('@/assets/images/list/thum_6.jpg'),
           writer: 'Anonymous',
           views: 0,
-          rank: '6',
         }
-      ]
+      ],
+      itemModal: false,
     }
   },
   methods: {
     // 리스트 컴포넌트 타입 선택
     selectListType: function(type) {
       this.listType = type;
+    },
+    modalOpen: function() {
+      this.itemModal = true;
+    },
+    onCountViews: function() {
+      if(this.theItem) {
+        let tmpIdx = this.items.findIndex(item => item.idx == this.theItem.idx);
+        this.items[tmpIdx].views++;
+        
+        this.modalOpen();
+      }
     }
   }
 }

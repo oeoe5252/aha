@@ -3,11 +3,9 @@
       <guide-title>Test</guide-title>
       <!-- 컴포넌트 요소 넣으면 됨 -->
 <!-- [TODO] 
-  - 화:오전:: 라디오, 체크 : v-model, check 여부, rules
-  - 화:오전:: 텍스트에어리아: v-model, 글자수 카운트, rules는 필요 없
-  - 화:오오오오후:: 셀렉트: 화요일 저녁에 놀고 해보자 수요일 전엔 기본이라도 완성시키기 
-  - 주말에 했음 좀 좋니.... 벼락치기 인생... 이럼 안대 김아진.... 외줄타기하네 혼자
+  - 셀렉트: 기본 select, 커스텀 select
   - 에러에 따른 스타일 효과 작업하기(추후)
+  - 필요없는 props 지우기, 그리고 정리
  -->
       <guide-sub-title class="line-hide">
         input
