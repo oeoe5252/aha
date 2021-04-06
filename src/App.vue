@@ -21,7 +21,7 @@
       v-model="theItem"
       :listType="listType"
       :items="items"
-      @click="onCountViews"></tmp-list>
+      @click="onCountUpViews"></tmp-list>
 
     <!-- [TODO] 팝업 컴포넌트 스타일 나중에
       - FIXED: 팝업 띄울 전체 바닥-투명도 스타일 인자 넘기는거
@@ -119,14 +119,18 @@ export default {
     }
   },
   methods: {
+    // 로컬스토리지 저장
     // 리스트 컴포넌트 타입 선택
     selectListType: function(type) {
+      localStorage.setItem('listType', type);
+      // this.listType = localStorage.getItem('listType');
       this.listType = type;
+      // this.saveLocal();
     },
     modalOpen: function() {
       this.itemModal = true;
     },
-    onCountViews: function() {
+    onCountUpViews: function() {
       if(this.theItem) {
         let tmpIdx = this.items.findIndex(item => item.idx == this.theItem.idx);
         this.items[tmpIdx].views++;
@@ -134,6 +138,10 @@ export default {
         this.modalOpen();
       }
     }
+  },
+  mounted() {
+    this.listType = localStorage.getItem('listType');
+    console.log('local-listType', this.listType);
   }
 }
 </script>
