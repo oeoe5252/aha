@@ -19,6 +19,16 @@
 
 ```
 
+## localStorage
+localStorage can only contain strings. This means that any objects or arrays you wish to store in localStorage must be converted to a JSON string, and then re-formatted when you retrieve them.
+```js
+ // Convert the object into a JSON string and store
+localStorage.setItem('key', JSON.stringify(object));
+
+// Retrieve the data and convert from JSOn string to object/array
+let obj = JSON.parse(localStorage.getItem('key'));
+```
+
 
 ## props
 ---

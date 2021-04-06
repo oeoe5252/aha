@@ -51,10 +51,9 @@ export default {
     methods: {
         test: function() {
             // props로 인식(및 추출)되지 않는 부모 범위 속성 바인딩입니다. 컴포넌트에 선언된 props가 없을 때 class와 style을 제외하고 모든 부모 범위 바인딩을 기본적으로 포함하며 v-bind="$attrs"를 통해 내부 컴포넌트로 전달할 수 있습니다 - 하이 오더 컴포넌트(HOC)를 작성할 때 유용합니다. (https://kr.vuejs.org/v2/api/index.html#vm-attrs)
-            // input 이벤트는 value에 데이터를 주니깐, 
+            // input 이벤트는 value에 데이터를 주니깐, 그 value 값은 model이 가지고 있으니깐 
             // console.log("인자 value", value);
             console.log("인자 this.value", this.theItem);
-            // console.log('input 발생', this.$attrs);
             
             this.$emit('input', this.theItem);
         }

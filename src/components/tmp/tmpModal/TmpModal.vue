@@ -8,7 +8,6 @@
                     @click="modalClose">
                     닫기
                 </div>
-                <!-- @click="$emit('update:show', false)" -->
                 <slot></slot>
             </div>
         </div>
