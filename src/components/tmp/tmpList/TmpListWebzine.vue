@@ -1,15 +1,6 @@
 <template>
         <!-- 컴포넌트3: type3: webzine: 웹진타입 -->
     <div>
-        <!-- // {
-        //   idx: '1',
-        //   title: '노래1 제목',
-        //   desc: '노래1 내용내용내용내용 내용내용 내용',
-        //   thum: require('@/assets/images/list/thum_1.jpg'),
-        //   writer: 'Anonymous',
-        //   views: 0,
-        //   rank: '1',
-        // }, -->
         <slot></slot>
         <div 
             v-for="(item, idx) of items" :key="idx"

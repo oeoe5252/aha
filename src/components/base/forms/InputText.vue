@@ -1,12 +1,13 @@
 <template>
+<!-- [TODO]
+    - 에러문구 컨포넌트화 스타일 에러 컴포넌트에 넣기
+    - 에러문구 등장효과
+    -->
   <div :class="[`input-${inputType}`, `${styleType}`, `${className}`, {'test': testClass}]">
-    <!-- methods 사용할때 () 까지 적어야한다, 없어도 빼면 시행안됨 -->
     <label 
         v-if="!isLabelHide()"
         :for="id"
         class="label-legend"><slot /></label>
-    <!-- 부모에서 v-model로 설정하여 자동으로 배치된 value값 할당 -->
-    <!-- 근데 같은 컴포넌트 쓰니깐, 같이 이벤트가 발생해버리네??, 이름부분만 이벤트 있음, 이름만 직혀야지 왜 이메일도 같이 찎혀 머리 안돌아가게 -->
     <input 
         :id="id"
         :name="name"
@@ -16,11 +17,6 @@
         :value="value"
         @input="onInputUpdate"/>
 
-    <!-- [TODO]
-        - 에러문구 컨포넌트화
-        - 에러문구 스타일
-        - 에러문구 등장효과
-     -->
     <p v-show="this.tmpErrMsg" class="error"><i></i>{{printErrMsg()}}</p>
   </div>
 </template>
@@ -81,29 +77,18 @@ export default {
             }
         },
         onInputUpdate: function(e) {
-            // this.value = e.target.value
-            // console.log(e.target.value, this.value, this.rules);
-            // this.test(e.target.value);
-            // this.checkRules();
-            // 자식에서 입력된 값을 부모 이벤트로 보냄
-            // this.checkRules(value)
             this.$emit('input', e.target.value);
         },
         test: v => v.length <= 2 || 'Max 2 characters',
         checkRules: function() {
-            // console.log(this.rules);
             let tmpValue = this.value;
             let tmpResult = this.rules.map(function(elem) {
-                // console.log("foreach", elem(tmpValue), typeof(elem(tmpValue)));
                 return elem(tmpValue);
-                // elem('test');
             });
-            // console.log("결과", tmpResult);
             return tmpResult;
         },
         printErrMsg: function() {
             this.tmpErrMsg = this.checkRules().find(element=> element !== true );
-            // console.log("print============", this.tmpErrMsg);
             return this.tmpErrMsg;
         }
     },
@@ -126,7 +111,6 @@ export default {
     }
     &.type2 {
         .label-legend {
-            // justify 이것저것 다 했는데 왜 적용 왜 안돼..
             width: 100px;
             text-align: right;
             padding-right: 1.5rem;
@@ -139,7 +123,7 @@ export default {
         }
     }
 }
-// [TODO] 에러 컴포넌트에 넣기
+
 .error {
     position: relative;
     display: block;

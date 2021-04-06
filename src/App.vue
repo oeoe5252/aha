@@ -130,22 +130,13 @@ export default {
     },
     onCountUpViews: function() {
       if(this.theItem) {
-
-        // let tmpIdx = this.items.findIndex(item => item.idx == this.theItem.idx);
-        // this.items[tmpIdx].views++;
-        // 위처럼, 인덱스를 찾아서 전체 객체에서 찾아서 인덱스 증가 시켜줬는데
-        // 넘겨받은 아이템이 참조하고 있는곳이 원본 객체라서, 그걸 받은 theItem도 원본 객체를 바라보고 있기 떄문에, 굳이 index 안찾아줘도 됐었다, 복사본이 전달되는게 ㄴㄴ했다.
         this.theItem.views++;
-        console.log("items:: origin", this.items);
-        console.log("theItem:: copy", this.theItems);
         this.modalOpen();
       }
     }
   },
   mounted() {
     this.listType = localStorage.getItem('listType');
-    console.log('this-items before', this.items);
-    console.log('local-listType', this.listType);
   },
   destroyed() {
   }

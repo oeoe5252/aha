@@ -1,6 +1,5 @@
 <template>
     <div>
-        <!-- 컴포넌트1: type1: basic: 기본타입 -->
         <h2>컴포넌트1: type1: basic: 기본타입</h2>
         <div 
             v-for="(item, idx) of items" :key="idx"
