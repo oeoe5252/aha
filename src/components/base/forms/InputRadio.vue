@@ -1,7 +1,7 @@
 <template>
   <!-- [TODO] 
     - 불필요한 prop 지우기
-    - vscode 탭 공백 설정...
+    - vscode 탭 공백 설정
   -->
   <div :class="[`input-${inputType}`, `${styleType}`, `${className}`]">
     <input 

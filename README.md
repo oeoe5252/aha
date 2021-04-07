@@ -7,17 +7,30 @@
    - 후자 사용(HTML 에서는 kebab-case를 사용하기 때문에 통일성 위해)
 3. 컴포넌트 명 합성어 사용:
 
-```js
-export default {
-    name: 'TodoItem',
-    // ...
-}
+   ```js
+   export default {
+       name: 'TodoItem',
+       // ...
+   }
 
-// definitions via Vue.component, we recommend kebab-case instead.
-vue.Component('todo-item') {
-    // ...
-}
-```
+   // definitions via Vue.component, we recommend kebab-case instead.
+   vue.Component('todo-item') {
+       // ...
+   }
+   ```
+
+4. \$emit 이벤트 명: @이벤트 명은 `kebab-case`로 작성한다.
+
+   - camel`C`ase로 해도 camel`c`ase로 사용된다.
+
+5. 코드 가독성:
+   - 탭사용 자제(탭 2space로 설정)
+   - 4space로 안하는 이유 : 깊이가 깊어지면, 한 라인에 표현되는 문장이 적어지기 때문에
+6. 단축어(?) 디렉티브:
+   - 경로: `@` is an alias to `/src`
+   - v-on: `@`
+   - v-bind: `:`
+   - v-slot: `#`
 
 ### Vue 기본 문법 구조
 
@@ -55,6 +68,11 @@ vue.Component('todo-item') {
     - v-on
     - v-html/ v-text
 
+### 기타
+
+- 유니코드 삽입
+  > 유니코드 선언 : `&#x+유니코드문자+;`
+
 ### ⛔애로사항
 
 1. 참조타입
@@ -82,7 +100,7 @@ vue.Component('todo-item') {
    - input
      > v-model에서 checked나, value값은 vue 가 가지고 있는게 우선되서 내가 넘긴 props은 무시된다. 그래서 다른 prop으로 전달한다.
    - default
-     > d
+     >
 
    ```html
    <input
@@ -109,6 +127,41 @@ vue.Component('todo-item') {
     // Select 태그는 value를 prop으로, change를 이벤트로 사용합니다.
     부모에서 v-model로 설정하여 자동으로 배치된 value값 할당 됨
     // input 이벤트는 value에 데이터를 주니깐, 그 value 값은 model이 가지고 있으니깐
+    // v-model을 사용해서, 부모의 v-model value에 해당 item 할당(그냥 있는거 활용하려고) : 값만 설정하면, value값을 v-model에 바인딩 해주고, input(위의 로직을 처리해주는) 이라는 이벤트도 발생시켜주니, 활용한것,(상태가 변경되면 수행됨), input 이라는 이벤트는 내가 만들어준게 아니고 v-model 설계한 사람이 만든거 쓴거즤
+   ```
+
+   ```html
+   <div
+     v-for="(item, idx) of items"
+     :key="idx"
+     class="item"
+     @click="onClickItem(item)"
+   ></div>
+   ```
+
+   ```js
+   methods: {
+       onClickItem: function(item) {
+           console.log("클릭", item);
+           // 부모에 input 이벤트를 발생시켜줘, 내가 전달하는 데이터는 item이야
+           // cf: @이벤트 명은 kebab-case로 작성한다. camelCase로 해도 camelcase로 사용된다.
+           // v-model을 사용해서, 부모의 v-model value에 해당 item 할당(그냥 있는거 활용하려고) : 값만 설정하면, value값을 v-model에 바인딩 해주고, input 이라는 이벤트도 발생시켜주니, 활용한것,(상태가 변경되면 수행됨)
+           this.$emit('input', item);
+           // 부모에 click 이벤트를 발생시켜줘()
+           // 모달 띄우기 위한 click 이벤트 계속 전달
+           this.$emit('click');
+       }
+   }
+
+   methods: {
+        onClickItem: function(item) {
+            this.$emit('input', item);
+            // 이벤트로 기능을 분리시켜주기 위해, input이란 이벤트는 값을 전달해주는 역할을 위해(부모에서 내가 직접 선언하지 않아도, v-model에 설계된 input이 수행됨), click이란 이벤트는 부모에서 카운트 증가 및 모달을 띄우기 위한 이벤트 전달을 위해 만든 아이, 그렇기 떄문에 전달할 인자는 없고, 그저 자식에서 이런 이벤트를 발생시키라도 부모한테 알리는 용도일뿐
+            // 부모에 click이라는 이벤트를 발생시켜줘()
+            // 모달 띄우기 위한 click 이벤트 계속 전달(이벤트 이름이 굳이 click이 아니어도 되지)
+            this.$emit('click');
+        }
+    }
    ```
 
 3. vuetify input validation
@@ -151,6 +204,88 @@ vue.Component('todo-item') {
        ]
    }
    ```
+
+4. 기타 부수적 사용법
+
+   ```html
+   <!-- methods 사용할때 () 까지 적어야한다, 없어도 빼면 시행안됨 -->
+   <label v-if="!isLabelHide()" :for="id" class="label-legend"><slot /></label>
+   ```
+
+   ```js
+   export default {
+     // vue 개발자 도구에 노출되는 요소명
+     name: "TmpList",
+     // 부모에게서 전달받은 데이터를 해당 컴포넌트에서 그저 넘겨주는게 아니라, 조건, 반복등에 활용할 변수지정.?
+     props: {
+       listType: {
+         type: String,
+         default: "webzine",
+       },
+       items: {
+         type: Array,
+       },
+     },
+   };
+   ```
+
+5. \$emit('update:프롭명', 값)
+   ```
+   this.$emit('update:modalShow', false);
+   ```
+6. router-link
+   > router-link 가 어디에 있든, router-view로 매핑됨
+7. :.sync : 자식에서 부모에게서 전달받은 prop 값 넘기며 부모에서 업데이트하기
+   > 자식 컴포넌트에서 title prop를 업데이트 하려고 할 때,
+   ```js
+   // 자식
+   this.$emit('update:title', newTitle); // prop title을 new값으로 업데이트 이벤 긔긔
+   // 부모
+   v-bind:title="doc.title" // 그 부모 data 값을 prop값으로 변경쓰!
+   v-on:update:title="doc.title = $event" // title 업데이트 하는뎁, 자식에서 받은 이벤값($event)을 부모 data 값에 넣는당 일케 동작함 (emit 이벤트로 받은 값($evnet)를 부모의 data에 저장하고, 부모의 prop 에 저장한 data를 넣어쥰다)
+   ```
+   > - 위의 코드를 한줄로 표헌하면
+   ```js
+   // 자식
+   this.$emit('update:title', newTitle);
+   // 부모
+   v-bind:title.sync="doc.title"
+   ```
+
+### [NOTE] 이동
+
+```
+github.io : router-link로 이동하면 뜨는데, 직접 페이지 치면 안나오는 이슈: 블로그 본 거 같은데 다시 카톡 뒤지기
+```
+
+```
+vue-router
+.router-link-active {
+    // <router-link>는 현재 라우트와 일치할 때 자동으로 .router-link-active 클래스가 추가됩니다.
+    background-color: red;
+  }
+```
+
+```
+근데 같은 컴포넌트 쓰니깐, 같이 이벤트가 발생해버리네??, 이름부분만 이벤트 있음, 이름만 직혀야지 왜 이메일도 같이 찎혀 머리 안돌아가게
+```
+
+```
+tmpList/index.vue :: $attr 관련 검색, 근데 이거 안쓰고 그냥 할당된 아이템값 집어넣음.. 안잡혀서 콘솔찍어도
+// props로 인식(및 추출)되지 않는 부모 범위 속성 바인딩입니다. 컴포넌트에 선언된 props가 없을 때 class와 style을 제외하고 모든 부모 범위 바인딩을 기본적으로 포함하며 v-bind="$attrs"를 통해 내부 컴포넌트로 전달할 수 있습니다 - 하이 오더 컴포넌트(HOC)를 작성할 때 유용합니다. (https://kr.vuejs.org/v2/api/index.html#vm-attrs)
+```
+
+```js
+  //- router/index.js 기본 루트는 설정 안하면 App.vue가 되는듯?
+  // {
+  //   path: '/about',
+  //   name: 'About',
+  //   // route level code-splitting
+  //   // this generates a separate chunk (about.[hash].js) for this route
+  //   // which is lazy-loaded when the route is visited.
+  //   component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    }
+```
 
 4. input radio 주석 정리전
 
@@ -236,46 +371,6 @@ vue.Component('todo-item') {
    },
 
    ```
-
-6. 기타 부수적 사용법
-
-   ```html
-   <!-- methods 사용할때 () 까지 적어야한다, 없어도 빼면 시행안됨 -->
-   <label v-if="!isLabelHide()" :for="id" class="label-legend"><slot /></label>
-   ```
-
-   ```js
-   export default {
-     // vue 개발자 도구에 노출되는 요소명
-     name: "TmpList",
-     // 부모에게서 전달받은 데이터를 해당 컴포넌트에서 그저 넘겨주는게 아니라, 조건, 반복등에 활용할 변수지정.?
-     props: {
-       listType: {
-         type: String,
-         default: "webzine",
-       },
-       items: {
-         type: Array,
-       },
-     },
-   };
-   ```
-
-7. \$emit('update:프롭명', 값)
-   ```
-   this.$emit('update:modalShow', false);
-   ```
-
-### [NOTE] 이동
-
-```
-근데 같은 컴포넌트 쓰니깐, 같이 이벤트가 발생해버리네??, 이름부분만 이벤트 있음, 이름만 직혀야지 왜 이메일도 같이 찎혀 머리 안돌아가게
-```
-
-```
-tmpList/index.vue :: $attr 관련 검색, 근데 이거 안쓰고 그냥 할당된 아이템값 집어넣음.. 안잡혀서 콘솔찍어도
-// props로 인식(및 추출)되지 않는 부모 범위 속성 바인딩입니다. 컴포넌트에 선언된 props가 없을 때 class와 style을 제외하고 모든 부모 범위 바인딩을 기본적으로 포함하며 v-bind="$attrs"를 통해 내부 컴포넌트로 전달할 수 있습니다 - 하이 오더 컴포넌트(HOC)를 작성할 때 유용합니다. (https://kr.vuejs.org/v2/api/index.html#vm-attrs)
-```
 
 ### computed
 

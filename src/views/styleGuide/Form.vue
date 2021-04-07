@@ -1,7 +1,6 @@
 <template>
   <guide-layout>
       <guide-title>Form</guide-title>
-      <!-- 컴포넌트 요소 넣으면 됨 -->
 
       <guide-sub-title  class="mb40 line-hide">
         input

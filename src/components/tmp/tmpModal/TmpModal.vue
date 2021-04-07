@@ -1,7 +1,8 @@
 <template>
-    <!-- 부모의 modalitem 값을 바꿔야함 -->
     <div class="modal-window">
-        <div class="modal-content-wrap" @click.self="modalClose">
+        <div 
+            class="modal-content-wrap"
+            @click.self="modalClose">
             <div class="modal-content">
                 <div 
                     class="modal-close"

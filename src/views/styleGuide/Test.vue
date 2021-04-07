@@ -96,6 +96,7 @@
           className="mt15">G1-체크3</input-check>
         <p class="error"><i></i>{{guideRequest.chkGroup1}}에러문구 올 예정</p>
       </div>
+
       <div class="g-wrap">
         <input-check
           v-model="guideRequest.chkGroup2"
@@ -113,6 +114,7 @@
           className="mt15">G2-체크2</input-check>
         <p class="error"><i></i>{{guideRequest.chkGroup2}} 에러문구 올 예정</p>
       </div>
+
       <div class="g-wrap">
         <!-- [TEST] input 바로 테스트 -->
         <input v-model="guideRequest.tmpChk" @change="testChange" @input="testInput" class="input-checkbox" type="checkbox" name="tmpChk" value="1chk" style="appearance: auto">
@@ -137,6 +139,7 @@ import InputText from "@/components/base/forms/InputText"
 import InputRadio from "@/components/base/forms/InputRadio"
 import InputCheck from "@/components/base/forms/InputCheckbox"
 import InputTextarea from "@/components/base/forms/InputTextarea"
+
 export default {
   name: 'GuideForm',
   components: {
