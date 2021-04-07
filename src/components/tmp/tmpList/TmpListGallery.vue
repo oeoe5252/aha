@@ -22,7 +22,7 @@ export default {
     methods: {
         onClickItem: function(item) {
             this.$emit('input', item);
-            this.$emit('click');
+            this.$emit('item-click');
         }
     }
 }

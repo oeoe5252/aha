@@ -21,7 +21,7 @@
 
 4. \$emit 이벤트 명: @이벤트 명은 `kebab-case`로 작성한다.
 
-   - camel`C`ase로 해도 camel`c`ase로 사용된다.
+   - camel`C`ase로 해도 camel`c`ase로 사용되기 때문에 `kebab-case`권장
 
 5. 코드 가독성:
    - 탭사용 자제(탭 2space로 설정)

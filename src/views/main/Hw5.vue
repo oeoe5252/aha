@@ -10,18 +10,20 @@
             <button @click="selectListType('basic')">&#x1F610;기본형{{listType}}</button>
             <button @click="selectListType('gallery')">&#x1F610;갤러리형{{listType}}</button>
             <button @click="selectListType('webzine')">&#x1F610;웹진형{{listType}}</button>
+            <!-- [NOTE] listType: default: webzine -->
+            <button @click="selectListType()">&#x1F610;Blank{{listType}}</button> 
         </div>
 
         <tmp-list
             v-model="theItem"
             :listType="listType"
             :items="items"
-            @click="onCountUpViews"></tmp-list>
+            @item-click="onCountUpViews"></tmp-list>
 
         <tmp-modal 
             v-if="itemModal"
             :modalShow.sync="itemModal">
-        
+
             <img 
                 class="modal-thum"
                 :src="theItem.thum"
@@ -40,8 +42,14 @@ import TmpModal from "@/components/tmp/tmpModal/TmpModal"
 export default ({
     name: 'Hw5',
     components: { TmpList, TmpModal },
+    // __화살표 함수를 `data`에서 사용하면 안됩니다__ (예를 들어, `data: () => { return { a: this.myProp }}`) 화살표 함수가 부모 컨텍스트를 바인딩하기 때문에 `this`는 예상과 달리 Vue 인스턴스가 아니며, `this.myProp`는 정의되지 않습니다.
     data() {
         return {
+            LIST_TYPE: {
+                LIST: 'list',
+                GALLERY: 'gallery',
+                WEBZINE: 'webzine'
+            },
             listType: 'webzine',
             theItem: {},
             items: [
@@ -115,7 +123,7 @@ export default ({
     mounted() {
         this.listType = localStorage.getItem('listType');
     },
-    destroyed() { }
+    destroyed() {}
 })
 </script>
 <style lang="scss">
